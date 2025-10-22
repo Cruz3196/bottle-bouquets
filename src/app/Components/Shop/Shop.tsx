@@ -13,46 +13,19 @@ interface Product {
 const Shop = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [hasStartedLoading, setHasStartedLoading] = useState<boolean>(false);
-    const sectionRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    // Start loading when section becomes visible
-                    if (entry.isIntersecting && !hasStartedLoading) {
-                        setHasStartedLoading(true);
-                        setLoading(true);
-                        
-                        const timer = setTimeout(() => {
-                            setProducts(mockData.slice(0, 4));
-                            setLoading(false);
-                        }, 2000);
+        setLoading(true);
+        const timer = setTimeout(() => {
+            setProducts(mockData.slice(0, 4)); // Simulate fetching first 4 products
+            setLoading(false);
+        }, 4000);
+        return () => clearTimeout(timer);
+    }, []);
 
-                        return () => clearTimeout(timer);
-                    }
-                });
-            },
-            {
-                threshold: 0.2, // Trigger when 20% visible
-                rootMargin: '0px'
-            }
-        );
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
-
-        return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
-            }
-        };
-    }, [hasStartedLoading]);
 
     return (
-        <section ref={sectionRef} className="min-h-screen py-16 px-4 bg-base-100">
+        <section className="min-h-screen py-16 px-4 bg-base-100">
             <div className="container mx-auto max-w-7xl">
                 <h2 className="font-bold text-3xl sm:text-4xl text-center mb-12">Our Products</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
