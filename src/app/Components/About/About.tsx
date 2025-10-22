@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { useSpring, useTrail, animated, config } from '@react-spring/web'
+import Link from 'next/link'
 
 const About = () => {
     const [hasAnimated, setHasAnimated] = useState(false)
@@ -72,9 +73,9 @@ const About = () => {
                             style={textTrail[3]}
                             className='text-center md:text-start'
                         >
-                        <button className="btn btn-primary mt-4">
-                            Read More
-                        </button>
+                        <Link href="/gallery" className="btn btn-primary mt-4">
+                            View Gallery
+                        </Link>
                         </animated.div>
                     </div>
                 
