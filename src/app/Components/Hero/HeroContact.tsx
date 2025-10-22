@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSpring, useTrail, animated, config } from '@react-spring/web'
 
-const HeroGallery = () => {
+const HeroContact = () => {
     const [hasAnimated, setHasAnimated] = useState(false);
 
     useEffect(() => {
@@ -43,7 +43,7 @@ const HeroGallery = () => {
                             style={contentTrail[0]}
                             className="mb-5 text-5xl font-bold"
                             >
-                            Hello there
+                            Contact Page
                         </animated.h1>
                         
                         <animated.p 
@@ -60,4 +60,4 @@ const HeroGallery = () => {
     );
 };
 
-export default HeroGallery;
+export default HeroContact;
