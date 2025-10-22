@@ -1,15 +1,39 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSpring, useTrail, animated, config } from '@react-spring/web'
 import Link from 'next/link'
 
 const About = () => {
     const [hasAnimated, setHasAnimated] = useState(false)
+    const sectionRef = useRef<HTMLElement>(null)
 
     useEffect(() => {
-        // Trigger animation only once on mount
-        setHasAnimated(true)
-    }, [])
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    // Trigger animation when section is 20% visible
+                    if (entry.isIntersecting && !hasAnimated) {
+                        setHasAnimated(true)
+                    }
+                })
+            },
+            {
+                threshold: 0.6, // Trigger when 60% of the section is visible
+                rootMargin: '0px' // No offset
+            }
+        )
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current)
+        }
+
+        // Cleanup
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current)
+            }
+        }
+    }, [hasAnimated])
 
     // Animation for the section title
     const titleSpring = useSpring({
@@ -33,7 +57,7 @@ const About = () => {
     })
 
     return (
-        <section className="min-h-screen px-4 py-16 bg-base-200">
+        <section ref={sectionRef} className="min-h-screen px-4 py-16 bg-base-200">
             <div className='container mx-auto flex flex-col items-center justify-center h-full'>
                 {/* this is the title of the about section */}
                 <animated.h2 
@@ -73,25 +97,25 @@ const About = () => {
                             style={textTrail[3]}
                             className='text-center md:text-start'
                         >
-                        <Link href="/gallery" className="btn btn-primary mt-4">
-                            View Gallery
-                        </Link>
+                            <Link href="/gallery" className="btn btn-primary mt-4">
+                                View Gallery
+                            </Link>
                         </animated.div>
                     </div>
                 
-                {/* Responsive Image */}
-                <animated.div 
-                    style={imageSpring}
-                    className="order-1 lg:order-2 flex justify-center"
-                >
-                    <div className="stack w-60 h-auto mx-1 sm:mx-5 lg:w-96">
-                        <img
-                            src="https://www.shutterstock.com/image-vector/missing-picture-page-website-design-600nw-1552421075.jpg"
-                            alt="Florist shop"
-                            className="w-full h-auto rounded-md rotate-6 sm:rotate-8 shadow-lg"
-                        />
-                    </div>
-                </animated.div>
+                    {/* Responsive Image */}
+                    <animated.div 
+                        style={imageSpring}
+                        className="order-1 lg:order-2 flex justify-center"
+                    >
+                        <div className="stack w-60 h-auto mx-1 sm:mx-5 lg:w-96">
+                            <img
+                                src="https://www.shutterstock.com/image-vector/missing-picture-page-website-design-600nw-1552421075.jpg"
+                                alt="Florist shop"
+                                className="w-full h-auto rounded-md rotate-6 sm:rotate-8 shadow-lg"
+                            />
+                        </div>
+                    </animated.div>
                 </div>
             </div>
         </section>
