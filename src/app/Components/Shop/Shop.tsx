@@ -1,48 +1,45 @@
-'use client';
-import React, { useEffect, useState, useRef } from 'react'
-import ProductList from '../Product/ProductList';
-import ProductCardSkeleton from '../Skeleton/ProductCardSkeleton';
-import { mockData } from '@/app/lib/db/mockData';
+"use client";
+import React, { useEffect, useState } from "react";
+import ProductList from "../Product/ProductList";
+import ProductCardSkeleton from "../Skeleton/ProductCardSkeleton";
+import { mockData } from "@/app/lib/db/mockData";
+import { StaticImageData } from "next/image";
 
 interface Product {
-    id: string;
-    title: string;
-    imageUrl: string;
+  id: string;
+  title: string;
+  imageUrl: string | StaticImageData;
 }
 
 const Shop = () => {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
-    useEffect(() => {
-        setLoading(true);
-        const timer = setTimeout(() => {
-            setProducts(mockData.slice(0, 4)); // Simulate fetching first 4 products
-            setLoading(false);
-        }, 4000);
-        return () => clearTimeout(timer);
-    }, []);
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setProducts(mockData.slice(0, 4));
+      setLoading(false);
+    }, 2000);
 
+    return () => clearTimeout(timer);
+  }, []);
 
-    return (
-        <section className="min-h-screen py-16 px-4 bg-base-100">
-            <div className="container mx-auto max-w-7xl">
-                <h2 className="font-bold text-3xl sm:text-4xl text-center mb-12">Our Products</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
-                    {/* Show skeletons while loading, else show products */}
-                    {loading ? (
-                        Array(4).fill(0).map((_, index) => (
-                            <ProductCardSkeleton key={index} />
-                        ))
-                    ) : (
-                        <ProductList products={products} />
-                    )}
-                </div>
-            </div>
-        </section>
-    );
+  return (
+    <section className="flex items-center justify-center py-12 lg:py-6 px-4 bg-base-100 min-h-[60vh] lg:min-h-[70vh]">
+      <div className="container mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
+          {loading ? (
+            Array(4)
+              .fill(0)
+              .map((_, index) => <ProductCardSkeleton key={index} />)
+          ) : (
+            <ProductList products={products} />
+          )}
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Shop;
-
-// using the useEffect hook, in our hook we create a variable timer that holds the setTimeout() function. Inside the function, we set the products state to the first 4 items from the mockData array after a delay of 5 seconds (5000 milliseconds). We also set the loading state to false after the data is "fetched". The cleanup function clears the timer when the component unmounts to prevent memory leaks.

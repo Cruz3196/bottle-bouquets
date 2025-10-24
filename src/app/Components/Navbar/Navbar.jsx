@@ -3,8 +3,8 @@ import React from 'react'
 
 const Navbar = () => {
     return (
-        <div className="container mx-auto navbar bg-base-100 sticky top-0 z-50">
-            
+        <div className="navbar bg-base-100 sticky top-0 z-50">
+            <div className='container mx-auto '>
             <div className="flex-1 mx-2">
                 <Link href="/" className="btn btn-ghost text-xl">Bottle Bouquets</Link>
             </div>
@@ -50,6 +50,7 @@ const Navbar = () => {
                         <Link href="/contact">Contact</Link>
                     </li>
                 </ul>
+            </div>
             </div>
         </div>
     )

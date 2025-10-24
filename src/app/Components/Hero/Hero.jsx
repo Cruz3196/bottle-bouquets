@@ -27,7 +27,7 @@ const Hero = () => {
     })
 
 return (
-<div className="hero bg-base-200 min-h-screen flex items-center justify-center px-4">
+<div className="hero bg-base-200 flex items-center justify-center py-12 lg:py-6 px-4 min-h-[100vh] lg:min-h-[80vh]">
     <div className="container mx-auto">
         <div className="text-center">
             <div className="max-w-2xl mx-auto">
