@@ -29,10 +29,10 @@ export async function POST(request: Request) {
 
     // creating the mail options. This is where you’ll define options like the sender, recipient(s), subject and email content.
     const mailOptions = {
-      from: process.env.EMAIL_USER, // sender address
-      to: process.env.EMAIL_TO,
+      from: email, // sender address
+      to: process.env.EMAIL_USER, // list of receivers
       subject: `New Contact Form Submission from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+      text: `Name: ${name} \nMessage: ${message}`,
     };
 
     // sending the email. this function is to send the email using the SMTP transporter that was configured.

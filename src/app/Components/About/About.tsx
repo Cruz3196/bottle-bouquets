@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSpring, useTrail, animated, config } from "@react-spring/web";
 import Link from "next/link";
+import Image from "next/image";
 
 const About = () => {
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -35,13 +36,6 @@ const About = () => {
     };
   }, [hasAnimated]);
 
-  // Animation for the section title
-  const titleSpring = useSpring({
-    opacity: hasAnimated ? 1 : 0,
-    transform: hasAnimated ? "translateY(0px)" : "translateY(-30px)",
-    config: config.slow,
-  });
-
   // Animation for text content (staggered)
   const textTrail = useTrail(4, {
     opacity: hasAnimated ? 1 : 0,
@@ -61,13 +55,13 @@ const About = () => {
   return (
     <section
       ref={sectionRef}
-      className="flex items-center justify-center py-12 lg:py-6 px-4 bg-base-200 min-h-[100vh] lg:min-h-[90vh]"
+      className="flex items-center justify-center py-12 lg:py-6 px-4 bg-background min-h-[100vh] lg:min-h-[90vh]"
     >
       <div className="container mx-auto flex flex-col items-center justify-center h-full">
         {/* about content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-6xl w-full">
           {/* Text Content */}
-          <div className="order-2 lg:order-1">
+          <div className="order-1 lg:order-1">
             <animated.h1
               style={textTrail[0]}
               className="font-bold text-2xl sm:text-4xl md:text-5xl mb-4 text-center md:text-start"
@@ -111,13 +105,15 @@ const About = () => {
           {/* Responsive Image */}
           <animated.div
             style={imageSpring}
-            className="order-1 lg:order-2 flex justify-center"
+            className="order-2 lg:order-2 flex justify-center"
           >
             <div className="stack w-60 h-auto mx-1 sm:mx-5 lg:w-96">
-              <img
+              <Image
                 src="https://www.shutterstock.com/image-vector/missing-picture-page-website-design-600nw-1552421075.jpg"
                 alt="Florist shop"
                 className="w-full h-auto rounded-md rotate-6 sm:rotate-8 shadow-lg"
+                width={384}
+                height={512}
               />
             </div>
           </animated.div>
