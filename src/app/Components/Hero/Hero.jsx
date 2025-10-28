@@ -27,10 +27,10 @@ const Hero = () => {
   });
 
   return (
-    <div className="hero flex items-center justify-center py-12 lg:py-6 px-4 min-h-[90vh] lg:min-h-[80vh]">
-      <div className="container mx-auto">
+    <div className="hero flex items-center justify-center py-12 lg:py-6 px-4 min-h-[90vh] lg:min-h-[80vh] overflow-x-hidden">
+      <div className="container mx-auto max-w-full">
         <div className="text-center">
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto px-4">
             <animated.h1
               style={headingSpring}
               className="w-full overflow-hidden"
