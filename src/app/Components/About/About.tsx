@@ -94,7 +94,7 @@ const About = () => {
               style={textTrail[2]}
               className="py-2 text-base leading-7 sm:leading-8 text-center lg:text-start"
             >
-              If you'd like to follow our journey, click on the link below and
+              If youd like to follow our journey, click on the link below and
               follow our Instagram page, Thank you for your support!
             </animated.p>
 
