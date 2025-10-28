@@ -1,6 +1,7 @@
 // components/ImageViewer/ImageViewer.tsx
 "use client";
 import React, { useEffect, useState } from "react";
+import { CldImage } from "next-cloudinary";
 import Image from "next/image";
 import { X, Loader2 } from "lucide-react";
 import { StaticImageData } from "next/image";
@@ -20,6 +21,9 @@ const ImageViewer = ({
 }: ImageViewerProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
+  // Check if imageUrl is a string (Cloudinary public_id) or StaticImageData
+  const isCloudinaryId = typeof imageUrl === "string";
+
   // Close on ESC key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -31,7 +35,7 @@ const ImageViewer = ({
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
       document.body.style.overflow = "hidden";
-      setIsLoading(true); // Reset loading state when opening
+      setIsLoading(true);
     }
 
     return () => {
@@ -72,15 +76,27 @@ const ImageViewer = ({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative w-full h-full">
-          <Image
-            src={imageUrl}
-            alt={title}
-            fill
-            className="object-contain"
-            sizes="100vw"
-            quality={100}
-            onLoad={() => setIsLoading(false)}
-          />
+          {isCloudinaryId ? (
+            <CldImage
+              src={imageUrl as string}
+              alt={title}
+              fill
+              className="object-contain"
+              sizes="100vw"
+              quality={100}
+              onLoad={() => setIsLoading(false)}
+            />
+          ) : (
+            <Image
+              src={imageUrl as StaticImageData}
+              alt={title}
+              fill
+              className="object-contain"
+              sizes="100vw"
+              quality={100}
+              onLoad={() => setIsLoading(false)}
+            />
+          )}
         </div>
       </div>
     </div>

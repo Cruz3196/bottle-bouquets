@@ -3,12 +3,6 @@ import React from "react";
 import ProductList from "../Product/ProductList";
 import { fetchCloudinaryImages } from "../../lib/cloudinaryFetch";
 
-interface Product {
-  id: string;
-  title: string;
-  imageUrl: string;
-}
-
 const GallerySection = async () => {
   // Fetch ALL images (no tag filter)
   const products = await fetchCloudinaryImages({
