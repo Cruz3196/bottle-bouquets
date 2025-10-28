@@ -5,3 +5,20 @@
 path {
   fill: transparent;
 }
+
+/* Prevent horizontal scroll */
+html {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Ensure SVGs don't overflow */
+svg {
+  max-width: 100%;
+  height: auto;
+}
