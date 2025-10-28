@@ -31,15 +31,18 @@ const Hero = () => {
       <div className="container mx-auto">
         <div className="text-center">
           <div className="max-w-2xl mx-auto">
-            <animated.h1 style={headingSpring}>
-              <svg viewBox="0 0 500 150">
+            <animated.h1
+              style={headingSpring}
+              className="w-full overflow-hidden"
+            >
+              <svg viewBox="0 0 500 150" className="w-full h-auto max-w-full">
                 <path
                   id="curve"
                   d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97"
                 />
                 <text
                   width="500"
-                  className={`${imperial.className} text-5xl sm:text-5xl `}
+                  className={`${imperial.className} text-5xl sm:text-5xl`}
                   style={{
                     stroke: "#c2f6ff",
                     strokeWidth: "1.5px",
