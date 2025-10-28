@@ -17,35 +17,8 @@ const ProductCard = ({ imageUrl, title }: ProductCardProps) => {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Check if it's a Cloudinary URL
-  const isCloudinaryUrl =
-    typeof imageUrl === "string" && imageUrl.includes("cloudinary.com");
-
-  // Extract public_id properly from Cloudinary URL
-  const getPublicId = (url: string): string | null => {
-    try {
-      // Format: https://res.cloudinary.com/{cloud_name}/image/upload/v{version}/{public_id}.{format}
-      const parts = url.split("/upload/");
-      if (parts.length < 2) return null;
-
-      // Get everything after /upload/ and remove version prefix
-      const afterUpload = parts[1];
-      // Remove version number (v1234567890/)
-      const withoutVersion = afterUpload.replace(/^v\d+\//, "");
-      // Remove file extension
-      const publicId = withoutVersion.split(".")[0];
-
-      return publicId;
-    } catch (error) {
-      console.error("Error extracting public_id:", error);
-      return null;
-    }
-  };
-
-  const publicId =
-    isCloudinaryUrl && typeof imageUrl === "string"
-      ? getPublicId(imageUrl)
-      : null;
+  // Check if imageUrl is a string (Cloudinary public_id) or StaticImageData
+  const isCloudinaryId = typeof imageUrl === "string";
 
   return (
     <>
@@ -60,9 +33,9 @@ const ProductCard = ({ imageUrl, title }: ProductCardProps) => {
                 <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
               </div>
             )}
-            {isCloudinaryUrl && publicId ? (
+            {isCloudinaryId ? (
               <CldImage
-                src={publicId}
+                src={imageUrl as string}
                 alt={title}
                 fill
                 className="object-cover transition-transform duration-300"
@@ -73,7 +46,7 @@ const ProductCard = ({ imageUrl, title }: ProductCardProps) => {
               />
             ) : (
               <Image
-                src={imageUrl}
+                src={imageUrl as StaticImageData}
                 alt={title}
                 fill
                 className="object-cover transition-transform duration-300"

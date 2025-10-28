@@ -1,5 +1,5 @@
 // lib/cloudinaryFetch.ts
-import cloudinary from "../utils/cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 
 interface Product {
   id: string;
@@ -22,8 +22,15 @@ export async function fetchCloudinaryImages(
   options: FetchOptions = {}
 ): Promise<Product[]> {
   try {
-    const { tags = [], maxResults = 50 } = options;
+    // Configure inline just to be safe
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+      secure: true,
+    });
 
+    const { tags = [], maxResults = 50 } = options;
     let expression = "folder:BottleBouquets";
 
     if (tags.length > 0) {
@@ -31,21 +38,21 @@ export async function fetchCloudinaryImages(
       expression += ` AND (${tagExpression})`;
     }
 
+    console.log("Searching with expression:", expression);
+
     const results = await cloudinary.search
       .expression(expression)
       .sort_by("created_at", "desc")
       .max_results(maxResults)
       .execute();
 
-    console.log(
-      `Found ${results.resources.length} images with tags: ${tags.join(", ")}`
-    );
+    console.log(`Found ${results.resources.length} images`);
 
     const formatted: Product[] = results.resources.map(
       (file: CloudinaryResource) => ({
         id: file.asset_id,
         title: file.public_id.split("/").pop() || "Untitled",
-        imageUrl: file.secure_url,
+        imageUrl: file.public_id, // Return public_id for CldImage
       })
     );
 
