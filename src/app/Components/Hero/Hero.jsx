@@ -4,12 +4,10 @@ import { useSpring, animated, config } from "@react-spring/web";
 import Image from "next/image";
 import { Imperial_Script } from "next/font/google";
 import Logo from "../../public/images/Logo.png";
-
 const imperial = Imperial_Script({
   subsets: ["latin"],
   weight: ["400"],
 });
-
 const Hero = () => {
   // Animation for heading
   const headingSpring = useSpring({
@@ -17,7 +15,6 @@ const Hero = () => {
     to: { opacity: 1, transform: "translateY(0px)" },
     config: config.slow,
   });
-
   // Animation for paragraph
   const paragraphSpring = useSpring({
     from: { opacity: 0, transform: "translateY(30px)" },
@@ -25,17 +22,13 @@ const Hero = () => {
     config: config.slow,
     delay: 300,
   });
-
   return (
-    <div className="hero flex items-center justify-center py-12 lg:py-6 px-4 min-h-[90vh] lg:min-h-[80vh] overflow-x-hidden">
-      <div className="container mx-auto max-w-full">
+    <div className="hero flex items-center justify-center py-12 lg:py-6 px-4 min-h-[90vh] lg:min-h-[80vh]">
+      <div className="container mx-auto">
         <div className="text-center">
-          <div className="max-w-2xl mx-auto px-4">
-            <animated.h1
-              style={headingSpring}
-              className="w-full overflow-hidden"
-            >
-              <svg viewBox="0 0 500 150" className="w-full h-auto max-w-full">
+          <div className="max-w-2xl mx-auto">
+            <animated.h1 style={headingSpring}>
+              <svg viewBox="0 0 500 150">
                 <path
                   id="curve"
                   d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97"
@@ -67,7 +60,6 @@ const Hero = () => {
                 />
               </div>
             </animated.div>
-
             <animated.p style={paragraphSpring} className="py-6 text-lg">
               Give a gift that surprises & delights! Each bouquet is hand
               crafted. Bottle bouquets are made with real flowers & a drinkable
@@ -79,5 +71,4 @@ const Hero = () => {
     </div>
   );
 };
-
 export default Hero;

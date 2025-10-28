@@ -129,7 +129,7 @@ const About = () => {
             style={imageSpring}
             className="order-1 lg:order-2 flex justify-center"
           >
-            <div className="stack w-full max-w-96 h-auto">
+            <div className="stack w-96 h-auto">
               {/* <Image
                 src="https://www.shutterstock.com/image-vector/missing-picture-page-website-design-600nw-1552421075.jpg"
                 alt="Florist shop"

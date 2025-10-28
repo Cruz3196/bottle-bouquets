@@ -1,10 +1,8 @@
-// app/page.tsx
 import { Suspense } from "react";
 import Hero from "./Components/Hero/Hero";
 import Shop from "./Components/Shop/Shop";
 import About from "./Components/About/About";
 import ProductCardSkeleton from "./Components/Skeleton/ProductCardSkeleton";
-
 function ShopLoading() {
   return (
     <section className="flex items-center justify-center py-12 lg:py-6 px-4 bg-white min-h-[60vh] lg:min-h-[70vh]">
@@ -20,16 +18,13 @@ function ShopLoading() {
     </section>
   );
 }
-
 export default function Home() {
   return (
     <div className="min-h-screen">
       <Hero />
-
       <Suspense fallback={<ShopLoading />}>
         <Shop />
       </Suspense>
-
       <About />
     </div>
   );
