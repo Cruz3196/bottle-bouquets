@@ -1,12 +1,13 @@
 "use client";
 import { useRef, useState } from "react";
-import { User, Mail } from "lucide-react";
+import { User, Mail, Loader2 } from "lucide-react";
 import { useSpring, animated } from "react-spring";
 import Image from "next/image";
 import RoseStella from "../../public/images/RoseStella.png";
 
 const ContactForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
+  const [imageLoading, setImageLoading] = useState(true);
   const [status, setStatus] = useState<{
     type: "idle" | "loading" | "success" | "error";
     message: string;
@@ -14,16 +15,16 @@ const ContactForm = () => {
 
   //   this is the animations from react spring
   const animationProps = useSpring({
-    from: { opacity: 0, transform: "translateY(50px)" }, // Start from invisible and 50px below
-    to: { opacity: 1, transform: "translateY(0px)" }, // End at visible and original position
-    config: { duration: 500 }, // Optional: adjust animation duration
+    from: { opacity: 0, transform: "translateY(50px)" },
+    to: { opacity: 1, transform: "translateY(0px)" },
+    config: { duration: 500 },
   });
 
   //   this is for the image
   const imageAnimationProps = useSpring({
-    from: { opacity: 0, transform: "translateX(-100px)" }, // Start from invisible and 100px to the left
-    to: { opacity: 1, transform: "translateX(0px)" }, // End at visible and original position
-    config: { duration: 600 }, // Animation duration
+    from: { opacity: 0, transform: "translateX(-100px)" },
+    to: { opacity: 1, transform: "translateX(0px)" },
+    config: { duration: 600 },
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,7 +33,6 @@ const ContactForm = () => {
 
     try {
       const formData = new FormData(e.currentTarget);
-      // preparing the data to be sent
       const data = {
         name: formData.get("name"),
         email: formData.get("email"),
@@ -44,7 +44,6 @@ const ContactForm = () => {
         return;
       }
 
-      //   we are fetching the /api/contact endpoint to post the form data
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -59,7 +58,6 @@ const ContactForm = () => {
       setStatus({ type: "success", message: "Message sent successfully!" });
       formRef.current?.reset();
 
-      // Clear the success message after 3 seconds
       setTimeout(() => {
         setStatus({ type: "idle", message: "" });
       }, 3000);
@@ -71,17 +69,23 @@ const ContactForm = () => {
   return (
     <section className="min-h-screen px-4 py-16">
       <div className="container mx-auto flex flex-col items-center justify-center h-full">
-        {/* This is where the contact form will be. */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl w-full">
           <div className="order-1 lg:order-1 flex justify-center">
             <animated.div style={imageAnimationProps}>
-              <div className="stack w-80 h-auto mx-9 lg:w-[500px]">
+              <div className="stack w-80 h-auto mx-9 lg:w-[500px] relative">
+                {imageLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center z-10 bg-gray-100 rounded-md">
+                    <Loader2 className="w-12 h-12 text-buttonHovered animate-spin" />
+                  </div>
+                )}
                 <Image
                   src={RoseStella}
                   alt="Florist shop"
                   className="w-full h-auto rounded-md shadow-lg"
                   width={500}
                   height={500}
+                  onLoad={() => setImageLoading(false)}
+                  priority
                 />
                 <div className="bg-buttonHovered grid place-content-center rounded-box h-full">
                   2
@@ -98,12 +102,10 @@ const ContactForm = () => {
                   ref={formRef}
                   onSubmit={handleSubmit}
                 >
-                  {/* name section of the form  */}
                   <label className="label">
                     <span className="label-text text-base">Name</span>
                   </label>
                   <div className="relative">
-                    {/* this is name input field */}
                     <input
                       id="name"
                       name="name"
@@ -114,12 +116,10 @@ const ContactForm = () => {
                     <User className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
                   </div>
 
-                  {/* email section of the form  */}
                   <label className="label">
                     <span className="label-text text-base">Email</span>
                   </label>
                   <div className="relative">
-                    {/* this is email input field */}
                     <input
                       id="email"
                       name="email"
@@ -130,7 +130,6 @@ const ContactForm = () => {
                     <Mail className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
                   </div>
 
-                  {/* Message section of the form  */}
                   <label className="label">
                     <span className="label-text text-base">Message</span>
                   </label>
@@ -143,7 +142,7 @@ const ContactForm = () => {
                     />
                     <Mail className="absolute left-4 top-4 h-5 w-5 text-gray-400" />
                   </div>
-                  {/* Refund Policy */}
+
                   <div className="mt-5 max-w-4xl w-full text-center">
                     <p className="text-sm text-gray-600">
                       Due to the custom nature of our products, refunds or

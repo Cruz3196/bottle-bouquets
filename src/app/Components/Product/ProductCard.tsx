@@ -1,6 +1,7 @@
 // components/Product/ProductCard.tsx
 "use client";
 import React, { useState } from "react";
+import { CldImage } from "next-cloudinary";
 import Image from "next/image";
 import { StaticImageData } from "next/image";
 import { Loader2 } from "lucide-react";
@@ -16,6 +17,36 @@ const ProductCard = ({ imageUrl, title }: ProductCardProps) => {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Check if it's a Cloudinary URL
+  const isCloudinaryUrl =
+    typeof imageUrl === "string" && imageUrl.includes("cloudinary.com");
+
+  // Extract public_id properly from Cloudinary URL
+  const getPublicId = (url: string): string | null => {
+    try {
+      // Format: https://res.cloudinary.com/{cloud_name}/image/upload/v{version}/{public_id}.{format}
+      const parts = url.split("/upload/");
+      if (parts.length < 2) return null;
+
+      // Get everything after /upload/ and remove version prefix
+      const afterUpload = parts[1];
+      // Remove version number (v1234567890/)
+      const withoutVersion = afterUpload.replace(/^v\d+\//, "");
+      // Remove file extension
+      const publicId = withoutVersion.split(".")[0];
+
+      return publicId;
+    } catch (error) {
+      console.error("Error extracting public_id:", error);
+      return null;
+    }
+  };
+
+  const publicId =
+    isCloudinaryUrl && typeof imageUrl === "string"
+      ? getPublicId(imageUrl)
+      : null;
+
   return (
     <>
       <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
@@ -29,16 +60,29 @@ const ProductCard = ({ imageUrl, title }: ProductCardProps) => {
                 <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
               </div>
             )}
-            <Image
-              src={imageUrl}
-              alt={title}
-              fill
-              className="object-cover transition-transform duration-300"
-              sizes="(max-width: 768px) 100vw, 
-                   (max-width: 1200px) 50vw, 
-                   25vw"
-              onLoad={() => setIsLoading(false)}
-            />
+            {isCloudinaryUrl && publicId ? (
+              <CldImage
+                src={publicId}
+                alt={title}
+                fill
+                className="object-cover transition-transform duration-300"
+                sizes="(max-width: 768px) 100vw, 
+                       (max-width: 1200px) 50vw, 
+                       25vw"
+                onLoad={() => setIsLoading(false)}
+              />
+            ) : (
+              <Image
+                src={imageUrl}
+                alt={title}
+                fill
+                className="object-cover transition-transform duration-300"
+                sizes="(max-width: 768px) 100vw, 
+                       (max-width: 1200px) 50vw, 
+                       25vw"
+                onLoad={() => setIsLoading(false)}
+              />
+            )}
           </figure>
         </div>
       </div>
