@@ -28,7 +28,7 @@ const Hero = () => {
         <div className="text-center">
           <div className="max-w-2xl mx-auto">
             <animated.h1 style={headingSpring}>
-              <svg viewBox="0 0 500 150">
+              <svg viewBox="0 0 500 150" className="w-full h-auto">
                 <path
                   id="curve"
                   d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97"
@@ -50,7 +50,7 @@ const Hero = () => {
             </animated.h1>
             {/* this is where the image is going to be  */}
             <animated.div style={headingSpring} className="flex justify-center">
-              <div className="w-80 h-auto mx-1 sm:mx-5 lg:w-96 ">
+              <div className="w-full max-w-80 h-auto mx-1 sm:mx-5 lg:max-w-96">
                 <Image
                   src={Logo}
                   alt="Bottle Bouquets Logo"
