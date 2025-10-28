@@ -4,22 +4,23 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="footer footer-center bg-main text-primary-content">
-      <aside>
+    <footer className="footer footer-center bg-main text-primary-content w-full max-w-full overflow-hidden px-4 py-8">
+      <aside className="w-full max-w-full">
         <Image
           src={bottleBouquetLogo}
           alt="Bottle Bouquets Logo"
           width={200}
           height={100}
+          className="w-auto h-auto max-w-full"
         />
       </aside>
-      <aside>
-        <p>
+      <aside className="w-full max-w-full">
+        <p className="text-sm sm:text-base break-words px-2">
           Copyright © {new Date().getFullYear()} Bottle Bouquets - All right
           reserved
         </p>
       </aside>
-      <nav>
+      <nav className="w-full max-w-full">
         <div className="grid grid-flow-col gap-4">
           <a>
             <svg
