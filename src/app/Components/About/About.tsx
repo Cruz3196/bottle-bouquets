@@ -47,26 +47,26 @@ const About = () => {
     };
   }, [hasAnimated]);
 
-  // Animation for text content (staggered)
+  // Animation for text content (staggered) - REDUCED translateX values
   const textTrail = useTrail(4, {
     opacity: hasAnimated ? 1 : 0,
-    transform: hasAnimated ? "translateX(0px)" : "translateX(-50px)",
+    transform: hasAnimated ? "translateX(0px)" : "translateX(-20px)",
     config: config.gentle,
   });
 
-  // Animation for image
+  // Animation for image - REDUCED translateX values
   const imageSpring = useSpring({
     opacity: hasAnimated ? 1 : 0,
     transform: hasAnimated
       ? "translateX(0px) scale(1)"
-      : "translateX(50px) scale(0.9)",
+      : "translateX(20px) scale(0.9)",
     config: config.slow,
   });
 
   return (
     <section
       ref={sectionRef}
-      className="flex items-center justify-center py-12 lg:py-6 px-4 min-h-[100vh] lg:min-h-[80vh]"
+      className="flex items-center justify-center py-12 lg:py-6 px-4 min-h-[100vh] lg:min-h-[80vh] overflow-hidden"
     >
       <div className="container mx-auto flex flex-col items-center justify-center h-full">
         {/* about content */}
@@ -94,7 +94,7 @@ const About = () => {
               style={textTrail[2]}
               className="py-2 text-base leading-7 sm:leading-8 text-center lg:text-start"
             >
-              If you’d like to follow our journey, click on the link below and
+              If you'd like to follow our journey, click on the link below and
               follow our Instagram page, Thank you for your support!
             </animated.p>
 
@@ -127,7 +127,7 @@ const About = () => {
           {/* Responsive Image */}
           <animated.div
             style={imageSpring}
-            className="order-1 lg:order-2 flex justify-center"
+            className="order-1 lg:order-2 flex justify-center w-full"
           >
             <div className="stack w-full max-w-96 h-auto">
               {/* <Image
