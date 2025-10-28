@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import nodemailer from "nodemailer"; // nodemailer is a module for sending emails
 import { NextResponse } from "next/server"; // is a utility for handling API responses
 import { emailTemplate } from "@/app/lib/emailTemplate";
 
