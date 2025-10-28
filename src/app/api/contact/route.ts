@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import { NextResponse } from "next/server"; // is a utility for handling API responses
+import { emailTemplate } from "@/app/lib/emailTemplate";
 
 // since we are sending a request, we specify the endpoint method as POST
 export async function POST(request: Request) {
@@ -27,12 +28,17 @@ export async function POST(request: Request) {
       },
     });
 
+    //creating a variable for the email template
+    const emailContent = emailTemplate({ name, email, message });
+
     // creating the mail options. This is where you’ll define options like the sender, recipient(s), subject and email content.
     const mailOptions = {
       from: email, // sender address
+      replyTo: email,
       to: process.env.EMAIL_USER, // list of receivers
-      subject: `New Contact Form Submission from ${name}`,
-      text: `Name: ${name} \nMessage: ${message}`,
+      subject: `New contact form submission from ${name}`, // Subject line
+      text: emailContent.text,
+      html: emailContent.html, // html body
     };
 
     // sending the email. this function is to send the email using the SMTP transporter that was configured.

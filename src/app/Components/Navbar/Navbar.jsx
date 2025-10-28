@@ -87,7 +87,7 @@ const Navbar = () => {
               alt="Bottle Bouquets Logo"
               width={50}
               height={50}
-              className="w-8 md:w-10 lg:w-12 h-auto transition-transform duration-300 rotate-12"
+              className="w-8 md:w-10 lg:w-12 h-auto transition-transform duration-300"
             />
             Bottle Bouquets
           </Link>

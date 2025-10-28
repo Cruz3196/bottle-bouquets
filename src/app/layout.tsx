@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="cupcake">
-      <body className="overflow-x-hidden">
+      <body className="overflow-x-hidden bg-background">
         <Navbar />
         {children}
         <Footer />

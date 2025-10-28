@@ -2,7 +2,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSpring, useTrail, animated, config } from "@react-spring/web";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
+import Video from "../VideoComponent/video";
+import { Instagram } from "lucide-react";
+import { Imperial_Script } from "next/font/google";
+
+const imperial = Imperial_Script({
+  subsets: ["latin"],
+  weight: ["400"],
+});
 
 const About = () => {
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -55,66 +63,81 @@ const About = () => {
   return (
     <section
       ref={sectionRef}
-      className="flex items-center justify-center py-12 lg:py-6 px-4 bg-background min-h-[100vh] lg:min-h-[90vh]"
+      className="flex items-center justify-center py-12 lg:py-6 px-4 min-h-[100vh] lg:min-h-[80vh]"
     >
       <div className="container mx-auto flex flex-col items-center justify-center h-full">
         {/* about content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-6xl w-full">
           {/* Text Content */}
-          <div className="order-1 lg:order-1">
+          <div className="order-2 lg:order-1">
             <animated.h1
               style={textTrail[0]}
-              className="font-bold text-2xl sm:text-4xl md:text-5xl mb-4 text-center md:text-start"
+              className={`${imperial.className} font-bold text-6xl sm:text-7xl md:text-7xl lg:text-8xl mb-4 text-center lg:text-start`}
             >
-              Florist Shop
+              Florals by Jazz
             </animated.h1>
 
             <animated.p
               style={textTrail[1]}
-              className="py-2 text-base leading-7 sm:leading-8 text-center md:text-start"
+              className="py-2 text-base leading-7 sm:leading-8 text-center lg:text-start"
             >
-              With a passion for creating innovative and user-friendly
-              applications. After several years in the automotive industry as a
-              service technician, I decided to make a career change and pursue a
-              career in software development. I have been self learning for
-              about two years, and recently decided to study computer science
-              through online programs, with a goal of earning a bachelors degree
-              in computer science.
+              Hello Lovelies! Welcome to our page, we customize bottle bouquets.
+              These are hand crafted & can be perfect for any occasion:
+              Birthdays, Anniversaries, holidays, graduations, just because and
+              so much more 😀
             </animated.p>
 
             <animated.p
               style={textTrail[2]}
-              className="py-2 text-base leading-7 sm:leading-8 text-center md:text-start"
+              className="py-2 text-base leading-7 sm:leading-8 text-center lg:text-start"
             >
-              I am comfortable working with React, Node.js, and MongoDB. I also
-              have experience in HTML, CSS, and JavaScript. I am always eager to
-              learn new technologies.
+              If you’d like to follow our journey, click on the link below and
+              follow our Instagram page, Thank you for your support!
             </animated.p>
 
-            {/* button for read more */}
+            {/* Instagram link with text */}
             <animated.div
               style={textTrail[3]}
-              className="text-center md:text-start"
+              className="flex flex-row justify-center lg:justify-start items-center gap-4 mt-6"
             >
-              <Link href="/gallery" className="btn btn-primary mt-4">
+              <Link
+                href="/gallery"
+                className="btn bg-buttonHovered hover:bg-main"
+              >
                 View Gallery
               </Link>
+              <div className="flex items-center gap-2 text-gray-600">
+                <span>Follow my journey:</span>
+                <a
+                  href={process.env.NEXT_PUBLIC_INSTAGRAM_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-pink-600 hover:text-pink-700 transition-colors"
+                  aria-label="Follow us on Instagram"
+                >
+                  <Instagram className="w-6 h-6" />
+                </a>
+              </div>
             </animated.div>
           </div>
 
           {/* Responsive Image */}
           <animated.div
             style={imageSpring}
-            className="order-2 lg:order-2 flex justify-center"
+            className="order-1 lg:order-2 flex justify-center"
           >
-            <div className="stack w-60 h-auto mx-1 sm:mx-5 lg:w-96">
-              <Image
+            <div className="stack w-96 h-auto">
+              {/* <Image
                 src="https://www.shutterstock.com/image-vector/missing-picture-page-website-design-600nw-1552421075.jpg"
                 alt="Florist shop"
-                className="w-full h-auto rounded-md rotate-6 sm:rotate-8 shadow-lg"
                 width={384}
                 height={512}
-              />
+                className="rounded-lg shadow-lg object-cover"
+              /> */}
+              <Video />
+              <div className="bg-buttonHovered grid place-content-center rounded-box h-full rotate-90">
+                2
+              </div>
             </div>
           </animated.div>
         </div>

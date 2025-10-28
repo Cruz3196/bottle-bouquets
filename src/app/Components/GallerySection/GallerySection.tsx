@@ -1,43 +1,34 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { useSpring, animated, config } from "@react-spring/web";
-import GalleryGrid from "./GalleryGrid";
-import { mockData } from "@/app/lib/db/mockData";
+// GallerySection.tsx (already a server component)
+import React from "react";
+import ProductList from "../Product/ProductList";
+import { fetchCloudinaryImages } from "../../lib/cloudinaryFetch";
 
-const GallerySection: React.FC = () => {
-  const [hasAnimated, setHasAnimated] = useState(false);
+interface Product {
+  id: string;
+  title: string;
+  imageUrl: string;
+}
 
-  useEffect(() => {
-    setHasAnimated(true);
-  }, []);
-
-  // Animation for title
-  const titleSpring = useSpring({
-    opacity: hasAnimated ? 1 : 0,
-    transform: hasAnimated ? "translateY(0px)" : "translateY(-30px)",
-    config: config.slow,
-  });
-
-  // Animation for grid
-  const gridSpring = useSpring({
-    opacity: hasAnimated ? 1 : 0,
-    transform: hasAnimated ? "translateY(0px)" : "translateY(20px)",
-    config: config.gentle,
-    delay: 200,
+const GallerySection = async () => {
+  // Fetch ALL images (no tag filter)
+  const products = await fetchCloudinaryImages({
+    maxResults: 8,
   });
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <animated.h2
-        style={titleSpring}
-        className="font-bold text-3xl sm:text-4xl text-center mb-8"
-      >
-        Gallery
-      </animated.h2>
-      <animated.div style={gridSpring}>
-        <GalleryGrid products={mockData} largeItemIds={["3", "5"]} />
-      </animated.div>
-    </div>
+    <section className="min-h-screen py-16 px-4">
+      <div className="container mx-auto max-w-7xl">
+        {products.length === 0 ? (
+          <div className="text-center text-red-500 mb-4">
+            No images found in Cloudinary
+          </div>
+        ) : null}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
+          <ProductList products={products} />
+        </div>
+      </div>
+    </section>
   );
 };
 

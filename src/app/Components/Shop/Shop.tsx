@@ -1,41 +1,26 @@
-"use client";
-import React, { useEffect, useState } from "react";
+// Shop.tsx - Remove "use client"
+import React from "react";
 import ProductList from "../Product/ProductList";
-import ProductCardSkeleton from "../Skeleton/ProductCardSkeleton";
-import { mockData } from "@/app/lib/db/mockData";
-import { StaticImageData } from "next/image";
+import { fetchCloudinaryImages } from "../../lib/cloudinaryFetch";
 
-interface Product {
-  id: string;
-  title: string;
-  imageUrl: string | StaticImageData;
-}
-
-const Shop = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => {
-      setProducts(mockData.slice(0, 4));
-      setLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
+const Shop = async () => {
+  // Fetch only images with "Shop" tag
+  const products = await fetchCloudinaryImages({
+    tags: ["Shop"],
+    maxResults: 4,
+  });
 
   return (
-    <section className="flex items-center justify-center py-12 lg:py-6 px-4 bg-base-100 min-h-[60vh] lg:min-h-[70vh]">
+    <section className="flex items-center justify-center py-12 lg:py-6 px-4 bg-white min-h-[60vh] lg:min-h-[70vh]">
       <div className="container mx-auto max-w-7xl">
+        {products.length === 0 ? (
+          <div className="text-center text-red-500 mb-4">
+            No shop images found
+          </div>
+        ) : null}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
-          {loading ? (
-            Array(4)
-              .fill(0)
-              .map((_, index) => <ProductCardSkeleton key={index} />)
-          ) : (
-            <ProductList products={products} />
-          )}
+          <ProductList products={products} />
         </div>
       </div>
     </section>

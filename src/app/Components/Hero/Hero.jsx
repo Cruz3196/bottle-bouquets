@@ -27,7 +27,7 @@ const Hero = () => {
   });
 
   return (
-    <div className="hero bg-background flex items-center justify-center py-12 lg:py-6 px-4 min-h-[90vh] lg:min-h-[80vh]">
+    <div className="hero flex items-center justify-center py-12 lg:py-6 px-4 min-h-[90vh] lg:min-h-[80vh]">
       <div className="container mx-auto">
         <div className="text-center">
           <div className="max-w-2xl mx-auto">
@@ -54,11 +54,11 @@ const Hero = () => {
             </animated.h1>
             {/* this is where the image is going to be  */}
             <animated.div style={headingSpring} className="flex justify-center">
-              <div className="stack w-80 h-auto mx-1 sm:mx-5 lg:w-96">
+              <div className="w-80 h-auto mx-1 sm:mx-5 lg:w-96 ">
                 <Image
                   src={Logo}
                   alt="Bottle Bouquets Logo"
-                  className="w-full h-auto rounded-md rotate-6 sm:rotate-8"
+                  className="w-full h-auto rounded-md"
                   width={500}
                   height={512}
                 />

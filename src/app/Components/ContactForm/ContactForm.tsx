@@ -2,6 +2,8 @@
 import { useRef, useState } from "react";
 import { User, Mail } from "lucide-react";
 import { useSpring, animated } from "react-spring";
+import Image from "next/image";
+import RoseStella from "../../public/images/RoseStella.png";
 
 const ContactForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -61,27 +63,31 @@ const ContactForm = () => {
       setTimeout(() => {
         setStatus({ type: "idle", message: "" });
       }, 3000);
-    } catch (error) {
+    } catch {
       setStatus({ type: "error", message: "Failed to send message." });
     }
   };
 
   return (
-    <section className="min-h-screen px-4 py-16 bg-base-200">
+    <section className="min-h-screen px-4 py-16">
       <div className="container mx-auto flex flex-col items-center justify-center h-full">
         {/* This is where the contact form will be. */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl w-full">
           <div className="order-1 lg:order-1 flex justify-center">
-            <div className="stack w-80 h-auto mx-1 sm:mx-5 lg:w-[500px]">
-              <animated.div style={imageAnimationProps}>
-                {/* this is the image for the contact form */}
-                <img
-                  src="https://www.shutterstock.com/image-vector/missing-picture-page-website-design-600nw-1552421075.jpg"
+            <animated.div style={imageAnimationProps}>
+              <div className="stack w-80 h-auto mx-9 lg:w-[500px]">
+                <Image
+                  src={RoseStella}
                   alt="Florist shop"
                   className="w-full h-auto rounded-md shadow-lg"
+                  width={500}
+                  height={500}
                 />
-              </animated.div>
-            </div>
+                <div className="bg-buttonHovered grid place-content-center rounded-box h-full">
+                  2
+                </div>
+              </div>
+            </animated.div>
           </div>
 
           <div className="order-2 lg:order-2 flex justify-center">
@@ -137,12 +143,20 @@ const ContactForm = () => {
                     />
                     <Mail className="absolute left-4 top-4 h-5 w-5 text-gray-400" />
                   </div>
+                  {/* Refund Policy */}
+                  <div className="mt-5 max-w-4xl w-full text-center">
+                    <p className="text-sm text-gray-600">
+                      Due to the custom nature of our products, refunds or
+                      returns are not available. Additionally, we reserve the
+                      right to refuse service to anyone.
+                    </p>
+                  </div>
 
                   <div className="form-control mt-6">
                     <button
                       type="submit"
                       disabled={status.type === "loading"}
-                      className="w-full h-12 bg-gradient-to-r from-teal-500 via-sky-500 to-blue-500 text-white rounded-lg font-medium hover:from-teal-600 hover:via-sky-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                      className="w-full h-12 bg-buttonHovered hover:bg-main disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                     >
                       {status.type === "loading"
                         ? "Sending..."
