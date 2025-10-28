@@ -20,14 +20,14 @@ const About = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // Trigger animation when section is 20% visible
+          // Trigger animation when section is visible
           if (entry.isIntersecting && !hasAnimated) {
             setHasAnimated(true);
           }
         });
       },
       {
-        threshold: 0.6, // Trigger when 60% of the section is visible
+        threshold: 0.2, // Trigger when 20% of the section is visible (works better in landscape)
         rootMargin: "0px", // No offset
       }
     );

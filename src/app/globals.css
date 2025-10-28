@@ -5,16 +5,3 @@
 path {
   fill: transparent;
 }
-html {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-* {
-  max-width: 100%;
-}
